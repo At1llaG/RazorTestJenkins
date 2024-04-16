@@ -11,7 +11,11 @@ WORKDIR /src
 # Copy csproj and restore dependencies
 COPY ["RazorTest.csproj", "./"]
 COPY ["RazorTest.csproj", "./RazorTest/RazorTest.csproj"]
+RUN ls -la
+RUN echo "15"
 COPY . .
+RUN ls -la
+RUN echo "18"
 RUN dotnet restore "RazorTest/RazorTest.csproj"
 
 # Copy the remaining source code
@@ -19,8 +23,11 @@ RUN dotnet restore "RazorTest/RazorTest.csproj"
 
 # Build the application
 WORKDIR "/src/RazorTest"
+RUN ls -la
+RUN echo "27"
 RUN dotnet build "RazorTest.csproj" -c Release -o /app/build
-
+RUN ls -la
+RUN echo "30"
 # Publish the application
 FROM build AS publish
 RUN dotnet publish "RazorTest.csproj" -c Release -o /app/publish
