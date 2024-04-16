@@ -1,25 +1,29 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
+# Use the official ASP.NET Core runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 80
 EXPOSE 6002
 
+# Use the official .NET SDK image for build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["RazorTest.csproj", "RazorTest/"]
-RUN dotnet restore "./RazorTest/RazorTest.csproj"
+
+# Copy csproj and restore dependencies
+COPY ["RazorTest/RazorTest.csproj", "./"]
+RUN dotnet restore "RazorTest.csproj"
+
+# Copy the remaining source code
 COPY . .
+
+# Build the application
 WORKDIR "/src/RazorTest"
-RUN dotnet build "./RazorTest.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "RazorTest.csproj" -c Release -o /app/build
 
+# Publish the application
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./RazorTest.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "RazorTest.csproj" -c Release -o /app/publish
 
+# Final stage/image
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
