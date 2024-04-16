@@ -7,4 +7,4 @@ services:
       context: .
       dockerfile: RazorTest/Dockerfile
     ports:
-      - "6002:80"
+      - "6002:8080"
