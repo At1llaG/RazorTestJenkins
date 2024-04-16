@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  razortest:
+    image: ${DOCKER_REGISTRY-}razortest
+    build:
+      context: .
+      dockerfile: RazorTest/Dockerfile
+    ports:
+      - "6002:80"
