@@ -14,6 +14,7 @@ COPY ["RazorTest.csproj", "./RazorTest/RazorTest.csproj"]
 RUN ls -la
 RUN echo "15"
 COPY . .
+COPY . ./RazorTest
 RUN ls -la
 RUN echo "18"
 RUN dotnet restore "RazorTest/RazorTest.csproj"
