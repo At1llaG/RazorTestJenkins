@@ -10,7 +10,7 @@ WORKDIR /src
 
 # Copy csproj and restore dependencies
 COPY ["RazorTest.csproj", "./"]
-COPY ["RazorTest.csproj", "./RazorTest"]
+COPY ["RazorTest.csproj", "./RazorTest.csproj"]
 RUN dotnet restore "RazorTest.csproj"
 
 # Copy the remaining source code
