@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy csproj and restore dependencies
-COPY ["RazorTest/RazorTest.csproj", "./"]
+COPY ["RazorTest.csproj", "./"]
 RUN dotnet restore "RazorTest.csproj"
 
 # Copy the remaining source code
